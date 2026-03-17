@@ -52,8 +52,9 @@ The above details are examples. Actual payment information is securely configure
 
    * Full name
    * Phone number
-4. User sends payment screenshot
-5. Admin reviews payment:
+4. payment instructions
+5. User sends payment screenshot
+6. Admin reviews payment:
 
    * ✅ Approve → Ticket assigned
    * ❌ Reject → User notified
