@@ -2,6 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from database import get_db
 from models import User
+from config import ADMIN_ID
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
