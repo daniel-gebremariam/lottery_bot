@@ -1,51 +1,38 @@
-import random
-from database import get_db
-from models import Ticket, Paymetnt
 from telegram import Update
 from telegram.ext import ContextTypes
+from sqlalchemy import func
+import random
 
-def generate_ticket(user_id):
+from database import get_db
+from models import Ticket, Payment
+from config import ADMIN_ID, MAX_TICKETS
 
-    db = get_db()
 
-    ticket_number = random.randint(1, 1000)
+def get_next_ticket_number(db):
+    last_ticket = db.query(func.max(Ticket.ticket_number)).scalar()
+    return (last_ticket or 0) + 1
 
-    ticket = Ticket(
-        ticket_number=ticket_number,
-        user_id=user_id,
-        payment_confirmed=True
-    )
-
-    db.add(ticket)
-    db.commit()
-
-    return ticket_number
-
-def draw_winner():
-
-    db = get_db()
-
-    tickets = db.query(Ticket).all()
-
-    winner = random.choice(tickets)
-
-    return winner.ticket_number
 
 async def handle_admin_actions(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     query = update.callback_query
     await query.answer()
 
-    data = query.data
+    if update.effective_user.id != ADMIN_ID:
+        return
 
     db = get_db()
+    data = query.data
 
     if data.startswith("approve_"):
 
         user_id = int(data.split("_")[1])
 
-        # Generate unique ticket
-        ticket_number = random.randint(1, 1000)
+        ticket_number = get_next_ticket_number(db)
+
+        if ticket_number > MAX_TICKETS:
+            await query.edit_message_caption("❌ Lottery Full")
+            return
 
         ticket = Ticket(
             ticket_number=ticket_number,
@@ -55,19 +42,17 @@ async def handle_admin_actions(update: Update, context: ContextTypes.DEFAULT_TYP
 
         db.add(ticket)
 
-        # Update payment status
         payment = db.query(Payment).filter(Payment.user_id == user_id).first()
         payment.status = "approved"
 
         db.commit()
 
-        # Notify user
         await context.bot.send_message(
             chat_id=user_id,
-            text=f"✅ Payment Approved\nYour ticket: {ticket_number}"
+            text=f"✅ Approved! Your ticket: {ticket_number}"
         )
 
-        await query.edit_message_caption("✅ Approved")
+        await query.edit_message_caption(f"✅ Approved\nTicket: {ticket_number}")
 
     elif data.startswith("reject_"):
 
@@ -80,7 +65,33 @@ async def handle_admin_actions(update: Update, context: ContextTypes.DEFAULT_TYP
 
         await context.bot.send_message(
             chat_id=user_id,
-            text="❌ Payment Rejected. Please try again."
+            text="❌ Payment rejected. Try again."
         )
 
         await query.edit_message_caption("❌ Rejected")
+
+
+async def draw_winner(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    if update.effective_user.id != ADMIN_ID:
+        await update.message.reply_text("❌ Not authorized")
+        return
+
+    db = get_db()
+
+    tickets = db.query(Ticket).all()
+
+    if len(tickets) == 0:
+        await update.message.reply_text("No tickets sold.")
+        return
+
+    winner = random.choice(tickets)
+
+    await update.message.reply_text(
+        f"🎉 Winner!\nTicket: {winner.ticket_number}"
+    )
+
+    await context.bot.send_message(
+        chat_id=winner.user_id,
+        text="🎉 Congratulations! You won!"
+    )
