@@ -3,6 +3,8 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 from config import BOT_TOKEN
 from handlers import start, join_lottery, handle_message, handle_photo
 
+from admin import handle_admin_actions
+
 app = Application.builder().token(BOT_TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
