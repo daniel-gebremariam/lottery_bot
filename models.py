@@ -28,3 +28,12 @@ class Payment(Base):
     user_id = Column(Integer)
     screenshot_file_id = Column(String)
     status = Column(String, default="pending")
+
+
+class Payment(Base):
+    __tablename__ = "payments"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer)
+    screenshot_file_id = Column(String)
+    status = Column(String, default="pending")
