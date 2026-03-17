@@ -16,7 +16,6 @@ A professional Telegram bot that manages a **car lottery system** where users pu
 
 ---
 
-## 🧠 How It Works
 ## 💳 Payment Procedure
 
 After registration, the bot will provide payment instructions.
@@ -44,8 +43,7 @@ Users are required to send the ticket fee using one of the following methods:
 
 ---
 
-⚠️ **Note:**  
-The above details are examples. Actual payment information is securely configured within the system.
+## 🧠 How It Works
 1. User starts the bot
 2. User joins lottery
 3. User submits:
