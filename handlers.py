@@ -63,9 +63,19 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         db.add(user)
         db.commit()
 
-        await update.message.reply_text(
-            "Send payment screenshot after paying 2000 Birr."
-        )
+    await update.message.reply_text(
+        "💳 Payment Instructions\n\n"
+        "Please send 2000 Birr to one of the following:\n\n"
+        
+        "🏦 Bank: Commercial Bank of Ethiopia\n"
+        "Account Name: ABC Trading\n"
+        "Account Number: 1000XXXXXX\n\n"
+        
+        "📱 Telebirr: 0912345678\n\n"
+        
+        "⚠️ IMPORTANT:\n"
+        "After payment, send the screenshot here."
+    )
 
         context.user_data["state"] = "payment"
 
