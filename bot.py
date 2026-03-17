@@ -13,4 +13,6 @@ app.add_handler(CallbackQueryHandler(join_lottery, pattern="join"))
 app.add_handler(MessageHandler(filters.TEXT, handle_message))
 app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
 
+app.add_handler(CallbackQueryHandler(handle_admin_actions, pattern="^(approve_|reject_)"))
+
 app.run_polling()
