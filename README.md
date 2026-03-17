@@ -17,7 +17,35 @@ A professional Telegram bot that manages a **car lottery system** where users pu
 ---
 
 ## 🧠 How It Works
+## 💳 Payment Procedure
 
+After registration, the bot will provide payment instructions.
+
+Users are required to send the ticket fee using one of the following methods:
+
+### 🏦 Bank Transfer
+
+- Bank Name: *Commercial Bank of Ethiopia*  
+- Account Name: *Your Company Name*  
+- Account Number: *XXXXXXXXXX*  
+
+### 📱 Mobile Payment
+
+- Telebirr Number: *09XXXXXXXX*  
+
+---
+
+### 📌 Steps to Complete Payment
+
+1. Send the required amount (e.g., 2000 Birr)  
+2. Take a screenshot of the payment confirmation  
+3. Upload the screenshot in the bot  
+4. Wait for admin approval  
+
+---
+
+⚠️ **Note:**  
+The above details are examples. Actual payment information is securely configured within the system.
 1. User starts the bot
 2. User joins lottery
 3. User submits:
