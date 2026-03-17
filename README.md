@@ -88,7 +88,7 @@ Edit `config.py`:
 
 ```python
 BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
-ADMIN_ID = 123456789
+ADMIN_ID = 123456789 # your telegram id (admin)
 DATABASE_URL = "postgresql://user:password@localhost/lotterydb"
 ```
 
