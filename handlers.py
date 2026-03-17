@@ -60,6 +60,23 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         db.add(user)
         db.commit()
 
+         # 🔹 Send to admin with buttons
+        keyboard = [
+            [
+                InlineKeyboardButton("✅ Approve", callback_data=f"approve_{telegram_id}"),
+                InlineKeyboardButton("❌ Reject", callback_data=f"reject_{telegram_id}")
+            ]
+        ]
+
+        reply_markup = InlineKeyboardMarkup(keyboard)
+
+        await context.bot.send_photo(
+            chat_id=ADMIN_ID,
+            photo=photo,
+            caption=f"New Payment\nUser ID: {telegram_id}",
+            reply_markup=reply_markup
+        )
+
         await update.message.reply_text(
             "Send payment screenshot after sending 2000 Birr."
         )
