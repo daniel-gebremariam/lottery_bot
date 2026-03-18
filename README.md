@@ -65,7 +65,7 @@ Users are required to send the ticket fee using one of the following methods:
 ## 🏗️ Project Structure
 
 ```
-car_lottery_bot/
+lottery_bot/
 │
 ├── bot.py          # Main bot runner
 ├── config.py       # Configuration (token, DB, admin)
