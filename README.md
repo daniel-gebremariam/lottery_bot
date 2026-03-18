@@ -85,8 +85,8 @@ car_lottery_bot/
 ### 1. Clone Project
 
 ```bash
-git clone https://github.com/daniel-gebremariam/car-lottery-bot.git
-cd car-lottery-bot
+git clone https://github.com/daniel-gebremariam/lottery-bot.git
+cd lottery-bot
 ```
 
 ---
