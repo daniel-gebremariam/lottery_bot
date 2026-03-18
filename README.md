@@ -77,7 +77,93 @@ lottery_bot/
 ├── requirements.txt
 └── README.md
 ```
+## 📁 Project Structure & File Responsibilities
 
+This project is organized into modular files, each responsible for a specific part of the system:
+
+---
+
+### 📄 `bot.py` — Main Entry Point
+
+- Starts the Telegram bot
+- Registers all handlers (user + admin)
+- Connects commands and button actions to functions
+- Runs the bot using polling
+
+---
+
+### ⚙️ `config.py` — Configuration
+
+- Stores global settings such as:
+  - Bot token
+  - Admin Telegram ID
+  - Database connection URL
+  - Ticket limits and pricing
+- Central place to update system settings
+
+---
+
+### 🗄️ `database.py` — Database Connection
+
+- Creates connection to PostgreSQL database
+- Provides session (`get_db()`) for database operations
+- Acts as bridge between app and database
+
+---
+
+### 🧱 `models.py` — Database Tables
+
+Defines all database tables using SQLAlchemy:
+
+- **User** → Stores user information (name, phone, Telegram ID)
+- **Ticket** → Stores ticket numbers (unique per user)
+- **Payment** → Stores payment screenshots and status
+
+---
+
+### 👤 `handlers.py` — User Logic
+
+Handles all user interactions:
+
+- `/start` command
+- Lottery registration (name & phone)
+- Payment instructions
+- Screenshot upload
+- Sends payment proof to admin
+
+---
+
+### 🛠️ `admin.py` — Admin Logic
+
+Handles admin-side operations:
+
+- Approve / Reject payments
+- Generate unique ticket numbers
+- Enforce ticket limit (1000 users)
+- Draw winner (`/draw`)
+- Notify winner and users
+
+---
+
+### 🧪 `init_db.py` — Database Initialization
+
+- Creates database tables (users, tickets, payments)
+- Run once before starting the bot
+
+---
+
+### 📦 `requirements.txt` — Dependencies
+
+- Lists all Python packages required to run the project
+- Used for quick installation with pip
+
+---
+
+### 📘 `README.md` — Documentation
+
+- Explains how the system works
+- Provides setup instructions
+- Describes features and usage
 ---
 
 ## ⚙️ Installation
